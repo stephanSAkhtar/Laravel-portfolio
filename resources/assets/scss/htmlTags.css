@@ -1,0 +1,18 @@
+html {
+    font-size: 0.6rem;
+}
+body {
+    margin: 0;
+    color: var(--bg-primary-color);
+}
+div {
+    font-size: 1.6rem;
+    color: var(--text-secondary-color);
+}
+h1 {
+    font-size: 4.8rem;
+    color: black;
+}
+h2 {
+    color: black;
+}
