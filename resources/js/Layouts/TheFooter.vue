@@ -15,6 +15,9 @@ export default {
 
 <style lang="scss">
 #footer {
+  padding: 0rem 2rem;
+  padding-top: 1rem;
+  background-color: var(--bg-primary-color);
   display: flex;
   justify-content: space-between;
   .logo {
