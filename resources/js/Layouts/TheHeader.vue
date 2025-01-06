@@ -37,9 +37,8 @@ function showLoginButton(event) {
 
 // Placeholder login function
 function login() {
-    router.push('/login')
+  router.push(route("login"));
   showLogin.value = false; // Close menu after login
-
 }
 // Hide the login menu when clicking outside
 const loginMenu = ref(null);
@@ -102,7 +101,7 @@ onUnmounted(() => {
         left: contextMenuPosition.x + 'px',
       }"
     >
-      <CustomButton @click="login">Log in</CustomButton>
+      <CustomButton><a :href="route('login')">Log in</a></CustomButton>
     </div>
   </div>
 </template>
