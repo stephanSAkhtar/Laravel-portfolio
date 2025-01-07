@@ -1,11 +1,8 @@
 <script setup>
 import Checkbox from "@/Components/Checkbox.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
-import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
 import CustomInput from "@/Components/CustomInput.vue";
-import PrimaryButton from "@/Components/PrimaryButton.vue";
-import TextInput from "@/Components/TextInput.vue";
+import CustomButton from "@/Components/CustomButton.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 
 defineProps({
@@ -38,7 +35,7 @@ const submit = () => {
       {{ status }}
     </div>
 
-    <form @submit.prevent="submit">
+    <form @submit.prevent="submit" id="login-form">
       <div>
         <CustomInput
           label="Email"
@@ -62,27 +59,39 @@ const submit = () => {
       <div class="mt-4 block">
         <label class="flex items-center">
           <Checkbox name="remember" v-model:checked="form.remember" />
-          <span class="ms-2 text-sm text-gray-600">Remember me</span>
+          <span class="text-white">Remember me</span>
         </label>
       </div>
 
-      <div class="mt-4 flex items-center justify-end">
+      <div class="mt-4 flex items-center justify-between w-full">
         <Link
           v-if="canResetPassword"
           :href="route('password.request')"
-          class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+          class="text-white"
         >
           Forgot your password?
         </Link>
 
-        <PrimaryButton
-          class="ms-4"
+        <CustomButton
+          class="mt-8"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
         >
           Log in
-        </PrimaryButton>
+        </CustomButton>
       </div>
     </form>
   </GuestLayout>
 </template>
+<style lang="scss">
+#login-form {
+  background: #00000023;
+  width: 30rem;
+  border: 2px solid #0000004f;
+  padding: 2rem;
+  border-radius: 1rem;
+  .label {
+    color: #fff !important;
+  }
+}
+</style>

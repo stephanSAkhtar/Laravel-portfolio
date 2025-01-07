@@ -39,49 +39,86 @@
       </div>
       <div class="message-box col-6">
         <div class="box">
-          <a-form-model ref="ruleForm" :model="form" :rules="rules">
+          <form ref="ruleForm">
             <div class="b-item">
-              <a-form-model-item ref="name" label="Full Name" prop="name">
+              <CustomInput
+                :required="true"
+                id="name"
+                v-model="form.name"
+                label="Full Name"
+                :message="form.error?.message"
+              />
+
+              <!-- <a-form-model-item ref="name" prop="name">
                 <a-input
-                  v-model="form.name"
                   @blur="
                     () => {
-                      $refs.name.onFieldBlur()
+                      $refs.name.onFieldBlur();
                     }
                   "
                 />
-              </a-form-model-item>
+              </a-form-model-item> -->
             </div>
 
             <div class="b-item">
-              <a-form-model-item
+              <CustomInput
+                :required="true"
+                type="tel"
+                id="phoneNumber"
+                v-model="form.phoneNumber"
+                label="Phone Number"
+                :message="form.error?.message"
+              />
+
+              <!-- <a-form-model-item
                 ref="phoneNumber"
                 label="Phone Number"
                 prop="phoneNumber"
               >
                 <a-input type="number" v-model="form.phoneNumber"></a-input>
-              </a-form-model-item>
+              </a-form-model-item> -->
             </div>
             <div class="b-item">
-              <a-form-model-item ref="email" label="Email" prop="email">
+              <CustomInput
+                :required="true"
+                id="email"
+                v-model="form.email"
+                label="Email"
+                type="email"
+                :message="form.error?.message"
+              />
+              <!-- <a-form-model-item ref="email" label="Email" prop="email">
                 <a-input type="email" v-model="form.email"></a-input>
-              </a-form-model-item>
+              </a-form-model-item> -->
             </div>
             <div class="b-item">
-              <a-form-model-item ref="subject" label="Subject" prop="subject">
+              <CustomInput
+                id="subject"
+                v-model="form.subject"
+                label="Subject"
+                :message="form.error?.message"
+              />
+              <!-- <a-form-model-item ref="subject" label="Subject" prop="subject">
                 <a-input v-model="form.subject"></a-input>
-              </a-form-model-item>
+              </a-form-model-item> -->
             </div>
             <div class="b-item">
-              <a-form-model-item ref="message" label="Message" prop="message">
-                <a-textarea
+              <CustomTextarea
+                :required="true"
+                id="message"
+                label="Message"
+                v-model="form.message"
+                placeholder="Type Your Message"
+              />
+              <!-- <a-form-model-item ref="message" label="Message" prop="message">
+                <CustomTextarea
                   v-model="form.message"
                   placeholder="Type Your Message"
                   :auto-size="{ minRows: 3, maxRows: 5 }"
                 />
-              </a-form-model-item>
+              </a-form-model-item> -->
             </div>
-          </a-form-model>
+          </form>
           <div class="b-item">
             <CustomButton @click="sendMail" :loading="mailLoading"
               >Send</CustomButton
@@ -121,60 +158,62 @@
 </template>
 
 <script setup>
-import { reactive,ref } from 'vue'
-import CustomButton from '../CustomButton.vue'
+import { reactive, ref } from "vue";
+import CustomButton from "../CustomButton.vue";
+import CustomTextarea from "../CustomTextarea.vue";
+import CustomInput from "../CustomInput.vue";
 
-let form = reactive({})
-let mailLoading = ref(false)
+let form = reactive({});
+let mailLoading = ref(false);
 let rules = reactive({
   name: [
     {
       required: true,
-      message: 'Full Name is required.',
-      trigger: 'blur',
+      message: "Full Name is required.",
+      trigger: "blur",
     },
     {
       min: 3,
       max: 50,
-      message: 'Length should be 3 to 50',
-      trigger: 'blur',
+      message: "Length should be 3 to 50",
+      trigger: "blur",
     },
   ],
   phoneNumber: [
     {
       required: true,
-      message: 'Phone Number is required.',
-      trigger: 'blur',
+      message: "Phone Number is required.",
+      trigger: "blur",
     },
     {
       min: 3,
       max: 17,
-      message: 'Length should be 3 to 17',
-      trigger: 'blur',
+      message: "Length should be 3 to 17",
+      trigger: "blur",
     },
   ],
   email: [
     {
       required: true,
-      message: 'Email is required.',
-      trigger: 'blur',
+      message: "Email is required.",
+      trigger: "blur",
     },
     {
-      type: 'email',
-      message: 'Please enter valid email',
-      trigger: 'blur',
+      type: "email",
+      message: "Please enter valid email",
+      trigger: "blur",
     },
   ],
   message: [
     {
       required: true,
-      message: 'Message is required.',
-      trigger: 'blur',
+      message: "Message is required.",
+      trigger: "blur",
     },
   ],
-})
+});
 function sendMail() {
-  mailLoading.value = true
+  mailLoading.value = true;
 
   // this.$refs.ruleForm.validate((valid) => {
   //   if (valid) {
@@ -236,54 +275,6 @@ function sendMail() {
         box-shadow: 0px 0px 55px -14px var(--box-shadow-color);
         .b-item {
           margin: 2rem 0rem;
-          .ant-form-item-label {
-            label {
-              color: inherit;
-              padding: 0.5rem 0rem;
-              font-weight: 500;
-              &:not(.ant-form-item-required) {
-                &::after {
-                  display: none;
-                }
-              }
-              &.ant-form-item-required {
-                &::after {
-                  display: inline-block;
-                  color: #f5222d;
-                  font-size: 1.6rem;
-                  font-family: SimSun, sans-serif;
-                  line-height: 1;
-                  content: '*' !important;
-                  margin-left: 0.4rem;
-                  vertical-align: super;
-                }
-                &::before {
-                  display: none;
-                }
-              }
-            }
-          }
-
-          .ant-input {
-            box-shadow: 0 0 1.7rem -0.6rem var(--box-shadow-color);
-            color: var(--theme-primary-color);
-            font-weight: 500;
-            &:hover {
-              border-color: var(--box-shadow-color);
-            }
-            &:focus {
-              border-color: var(--box-shadow-color);
-              border-right-width: 1px !important;
-              outline: 0;
-              box-shadow: inset 0 0 14px -0.2rem var(--box-shadow-color);
-            }
-
-            &::-webkit-inner-spin-button,
-            &::-webkit-outer-spin-button {
-              -webkit-appearance: none;
-            }
-            -moz-appearance: textfield;
-          }
           button {
             width: 100%;
           }

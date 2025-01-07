@@ -118,9 +118,10 @@ onMounted(() => {
         font-size: 2rem;
         height: fit-content;
         width: fit-content;
-        padding: 0.5rem 1.5rem;
+        padding: 1rem 1.5rem;
         border: none;
         border-radius: 50%;
+        border: 2px dashed var(--theme-primary-color);
         background: linear-gradient(
             0deg,
             var(--theme-primary-color) 1%,

@@ -1,7 +1,7 @@
 <script setup>
 import CustomButton from "@/Components/CustomButton.vue";
 import { ref, onMounted, onUnmounted } from "vue";
-import { router } from "@inertiajs/vue3";
+import { router, Link } from "@inertiajs/vue3";
 const themeMode = ref("dark");
 const showLogin = ref(false);
 const contextMenuPosition = ref({ x: 0, y: 0 });
@@ -101,7 +101,9 @@ onUnmounted(() => {
         left: contextMenuPosition.x + 'px',
       }"
     >
-      <CustomButton><a :href="route('login')">Log in</a></CustomButton>
+      <span class="login-button"
+        ><Link :href="route('login')">Log in</Link></span
+      >
     </div>
   </div>
 </template>
@@ -175,9 +177,27 @@ onUnmounted(() => {
   display: block;
   position: absolute;
   background-color: white;
-  padding: 10px;
+  padding: 5px 0;
+  width: max-content;
   border-radius: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 10;
+  .login-button {
+    width: 8rem;
+    height: 4rem;
+    a {
+      padding: 5px 10px;
+      width: 100%;
+      height: 1rem;
+      line-height: 1rem;
+      text-decoration: none;
+      color: var(--theme-primary-color);
+      background-color: #fff;
+      &:hover {
+        background-color: var(--theme-primary-color);
+        color: #fff;
+      }
+    }
+  }
 }
 </style>

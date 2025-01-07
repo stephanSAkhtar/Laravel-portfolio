@@ -1,0 +1,200 @@
+// Define spacing scale
+$spacing-scale: (1, 2, 4, 8, 16, 32, 64);
+
+// Define sides
+$sides: (t:top, r:right, b:bottom, l:left); // top, right, bottom, left
+
+// Mixin for generating custom spacing classes
+@mixin generate-spacing-classes($property, $prefix) {
+  @each $size in $spacing-scale {
+    .#{$prefix}-#{$size} {
+      #{$property}: #{$size}px !important;
+    }
+  }
+}
+
+// Generate specific margin and padding sides
+@mixin generate-side-spacing($property, $prefix, $sides) {
+  @each $side,$name in $sides {
+    @each $size in $spacing-scale {
+      .#{$prefix}#{$side}-#{$size} {
+        #{$property}-#{$name}: #{$size}px !important;
+      }
+    }
+  }
+}
+
+// Mixin for display classes
+@mixin generate-display-classes {
+  .block {
+    display: block !important;
+  }
+  .inline {
+    display: inline !important;
+  }
+  .inline-block {
+    display: inline-block !important;
+  }
+  .flex {
+    display: flex !important;
+  }
+  .inline-flex {
+    display: inline-flex !important;
+  }
+  .grid {
+    display: grid !important;
+  }
+  .none {
+    display: none !important;
+  }
+}
+
+// Mixin for position classes
+@mixin generate-position-classes {
+  .position-static {
+    position: static !important;
+  }
+  .position-relative {
+    position: relative !important;
+  }
+  .position-absolute {
+    position: absolute !important;
+  }
+  .position-fixed {
+    position: fixed !important;
+  }
+  .position-sticky {
+    position: sticky !important;
+  }
+}
+
+// Mixin for alignment classes
+@mixin generate-alignment-classes {
+  // Text alignment
+  .text-left {
+    text-align: left !important;
+  }
+  .text-center {
+    text-align: center !important;
+  }
+  .text-right {
+    text-align: right !important;
+  }
+  .text-justify {
+    text-align: justify !important;
+  }
+
+  // Vertical alignment
+  .align-top {
+    vertical-align: top !important;
+  }
+  .align-middle {
+    vertical-align: middle !important;
+  }
+  .align-bottom {
+    vertical-align: bottom !important;
+  }
+}
+
+// Mixin for flexbox alignment classes
+@mixin generate-flex-classes {
+  .justify-start {
+    justify-content: flex-start !important;
+  }
+  .justify-center {
+    justify-content: center !important;
+  }
+  .justify-end {
+    justify-content: flex-end !important;
+  }
+  .justify-between {
+    justify-content: space-between !important;
+  }
+  .justify-around {
+    justify-content: space-around !important;
+  }
+  .justify-evenly {
+    justify-content: space-evenly !important;
+  }
+
+  .items-start {
+    align-items: flex-start !important;
+  }
+  .items-center {
+    align-items: center !important;
+  }
+  .items-end {
+    align-items: flex-end !important;
+  }
+  .items-stretch {
+    align-items: stretch !important;
+  }
+
+  .self-start {
+    align-self: flex-start !important;
+  }
+  .self-center {
+    align-self: center !important;
+  }
+  .self-end {
+    align-self: flex-end !important;
+  }
+  .self-stretch {
+    align-self: stretch !important;
+  }
+}
+
+// Mixin for overflow classes
+@mixin generate-overflow-classes {
+  .overflow-auto {
+    overflow: auto !important;
+  }
+  .overflow-hidden {
+    overflow: hidden !important;
+  }
+  .overflow-visible {
+    overflow: visible !important;
+  }
+  .overflow-scroll {
+    overflow: scroll !important;
+  }
+
+  .overflow-x-auto {
+    overflow-x: auto !important;
+  }
+  .overflow-x-hidden {
+    overflow-x: hidden !important;
+  }
+  .overflow-x-visible {
+    overflow-x: visible !important;
+  }
+  .overflow-x-scroll {
+    overflow-x: scroll !important;
+  }
+
+  .overflow-y-auto {
+    overflow-y: auto !important;
+  }
+  .overflow-y-hidden {
+    overflow-y: hidden !important;
+  }
+  .overflow-y-visible {
+    overflow-y: visible !important;
+  }
+  .overflow-y-scroll {
+    overflow-y: scroll !important;
+  }
+}
+
+// Mixin for generating all utility classes
+@mixin generate-utility-classes {
+  @include generate-display-classes;
+  @include generate-position-classes;
+  @include generate-alignment-classes;
+  @include generate-flex-classes;
+  @include generate-overflow-classes;
+  @include generate-spacing-classes(margin, m);
+  @include generate-side-spacing(margin, m, $sides);
+  @include generate-spacing-classes(padding, p);
+  @include generate-side-spacing(padding, p, $sides);
+}

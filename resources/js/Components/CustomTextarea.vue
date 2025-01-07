@@ -1,22 +1,19 @@
 <template>
-  <div class="custom-input">
+  <div id="custom-textarea">
     <label :for="id" class="label" :class="{ required: required }">{{
       label
     }}</label>
 
-    <input
+    <textarea
       :id="id"
-      :type="type"
+      :rows="rows"
+      :cols="cols * 10"
       :class="classes"
       class="mt-4"
       v-model="inputValue"
       :required="required"
-      v-bind="{
-        pattern: type === 'tel' ? phonePattern : undefined,
-      }"
       autofocus
       @change="onValueChange($event.target.value)"
-      autocomplete="newPassword"
     />
 
     <InputError v-if="message" class="mt-2" :message="message" />
@@ -26,16 +23,14 @@
 <script setup>
 import { ref } from "vue";
 import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import TextInput from "@/Components/TextInput.vue";
 const props = defineProps({
-  type: {
-    type: String,
-    default: "text",
+  rows: {
+    type: [Number, String],
+    default: 5,
   },
-  required: {
-    type: Boolean,
-    default: false,
+  cols: {
+    type: [Number, String],
+    default: 5,
   },
   message: {
     type: String,
@@ -49,10 +44,15 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+  required: {
+    type: Boolean,
+    default: false,
+  },
   classes: {
     type: String,
     default: "mt-1 block w-full",
   },
+
   modelValue: {
     type: [String, Number],
     default: undefined,
@@ -60,7 +60,6 @@ const props = defineProps({
 });
 const emit = defineEmits(["update:modelValue"]);
 const inputValue = ref(props.modelValue);
-const phonePattern = "^[0-9]{1,15}$";
 function onValueChange(val) {
   console.log(val);
   emit("update:modelValue", val);
@@ -68,13 +67,11 @@ function onValueChange(val) {
 </script>
 
 <style lang="scss" scoped>
-.custom-input {
+#custom-textarea {
   margin: 1rem 0;
-  input {
-    height: 4rem;
+  textarea {
     padding: 0.5rem 1rem;
     border: 1px solid var(--border-color);
-    width: 100%;
     border-radius: 0.5rem;
     outline: none;
     color: var(--text-secondary-color);
@@ -85,15 +82,6 @@ function onValueChange(val) {
       border: 1px solid var(--theme-primary-color);
       color: var(--theme-primary-color) !important;
     }
-    &:invalid {
-      //   outline: 2px solid red !important;
-      border: 2px solid red !important;
-    }
-    &::-webkit-inner-spin-button,
-    &::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-    }
-    -moz-appearance: textfield;
   }
   label {
     color: inherit;

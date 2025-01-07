@@ -14,6 +14,6 @@
   justify-content: center;
   height: 100vh;
   width: 100%;
-  background-color: #fff;
+  background: var(--theme-gradient-primary-color);
 }
 </style>

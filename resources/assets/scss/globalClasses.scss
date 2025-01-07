@@ -1,0 +1,14 @@
+@use "./mixins" as *;
+@include generate-utility-classes;
+.w-full {
+  width: 100%;
+}
+.h-full {
+  height: 100%;
+}
+.bg-white {
+  background-color: #fff;
+}
+.text-white {
+  color: #fff;
+}
