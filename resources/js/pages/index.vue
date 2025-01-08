@@ -104,6 +104,7 @@ onMounted(() => {
 }
 
 .layout-content {
+    color: var(--text-secondary-color);
     padding: 2rem;
     background-color: var(--bg-primary-color);
 }

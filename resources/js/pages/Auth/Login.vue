@@ -48,12 +48,24 @@ const submit = () => {
 
       <div class="mt-4">
         <CustomInput
-          label="Password"
           id="password"
           type="password"
           v-model="form.password"
           :message="form.errors.password"
-        />
+        >
+          <template #label>
+            <div class="flex items-center justify-between">
+              <div class="label">Password</div>
+              <Link
+                v-if="canResetPassword"
+                :href="route('password.request')"
+                class="text-white"
+              >
+                Forgot your password?
+              </Link>
+            </div>
+          </template>
+        </CustomInput>
       </div>
 
       <div class="mt-4 block">
@@ -63,17 +75,9 @@ const submit = () => {
         </label>
       </div>
 
-      <div class="mt-4 flex items-center justify-between w-full">
-        <Link
-          v-if="canResetPassword"
-          :href="route('password.request')"
-          class="text-white"
-        >
-          Forgot your password?
-        </Link>
-
+      <div class="mt-4 w-full">
         <CustomButton
-          class="mt-8"
+          classes="w-full"
           :class="{ 'opacity-25': form.processing }"
           :disabled="form.processing"
         >

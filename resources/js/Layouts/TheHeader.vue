@@ -119,11 +119,12 @@ onUnmounted(() => {
   .Header-title {
     display: flex;
     align-items: center;
-
     .logo {
       text-transform: uppercase;
       font-weight: 500;
       font-size: 4rem;
+line-height: 4rem;
+
       font-family: var(--logo-font-family);
       color: var(--text-primary-color) !important;
     }

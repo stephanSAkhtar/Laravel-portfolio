@@ -1,8 +1,12 @@
 <template>
   <div class="custom-input">
-    <label :for="id" class="label" :class="{ required: required }">{{
-      label
-    }}</label>
+    <label :for="id">
+      <slot name="label">
+        <div class="label" :class="{ required: required }">
+          {{ label }}
+        </div>
+      </slot>
+    </label>
 
     <input
       :id="id"
@@ -26,8 +30,6 @@
 <script setup>
 import { ref } from "vue";
 import InputError from "@/Components/InputError.vue";
-import InputLabel from "@/Components/InputLabel.vue";
-import TextInput from "@/Components/TextInput.vue";
 const props = defineProps({
   type: {
     type: String,
@@ -62,7 +64,6 @@ const emit = defineEmits(["update:modelValue"]);
 const inputValue = ref(props.modelValue);
 const phonePattern = "^[0-9]{1,15}$";
 function onValueChange(val) {
-  console.log(val);
   emit("update:modelValue", val);
 }
 </script>

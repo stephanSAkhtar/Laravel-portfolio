@@ -1,84 +1,112 @@
-<script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+<template>
+  <div class="dropdown" ref="dropdown" @click="toggleDropdown">
+    <div class="dropdown-toggle">
+      <slot name="trigger">{{ buttonText }}</slot>
+    </div>
+    <div v-if="isOpen" class="dropdown-menu">
+      <slot name="content">
+        <ul class="menu">
+          <li><a href="#option1">Option 1</a></li>
+          <li><a href="#option2">Option 2</a></li>
+          <li><a href="#option3">Option 3</a></li>
+        </ul>
+      </slot>
+    </div>
+  </div>
+</template>
 
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+// Props
 const props = defineProps({
-    align: {
-        type: String,
-        default: 'right',
-    },
-    width: {
-        type: String,
-        default: '48',
-    },
-    contentClasses: {
-        type: String,
-        default: 'py-1 bg-white',
-    },
+  buttonText: {
+    type: String,
+    default: "Menu",
+  },
 });
 
-const closeOnEscape = (e) => {
-    if (open.value && e.key === 'Escape') {
-        open.value = false;
-    }
+// Reactive state
+const isOpen = ref(false);
+
+// Methods
+const toggleDropdown = () => {
+  isOpen.value = !isOpen.value;
+};
+const dropdown = ref(null);
+const closeDropdown = (event) => {
+  const dropdownElement = dropdown.value;
+  if (dropdownElement && !dropdownElement.contains(event.target)) {
+    isOpen.value = false;
+  }
 };
 
-onMounted(() => document.addEventListener('keydown', closeOnEscape));
-onUnmounted(() => document.removeEventListener('keydown', closeOnEscape));
-
-const widthClass = computed(() => {
-    return {
-        48: 'w-48',
-    }[props.width.toString()];
+// Lifecycle hooks
+onMounted(() => {
+  document.addEventListener("click", closeDropdown);
 });
 
-const alignmentClasses = computed(() => {
-    if (props.align === 'left') {
-        return 'ltr:origin-top-left rtl:origin-top-right start-0';
-    } else if (props.align === 'right') {
-        return 'ltr:origin-top-right rtl:origin-top-left end-0';
-    } else {
-        return 'origin-top';
-    }
+onBeforeUnmount(() => {
+  document.removeEventListener("click", closeDropdown);
 });
-
-const open = ref(false);
 </script>
 
-<template>
-    <div class="relative">
-        <div @click="open = !open">
-            <slot name="trigger" />
-        </div>
+<style lang="scss">
+/* Dropdown container */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 
-        <!-- Full Screen Dropdown Overlay -->
-        <div
-            v-show="open"
-            class="fixed inset-0 z-40"
-            @click="open = false"
-        ></div>
+  .dropdown-toggle {
+    background-color: #ffffff;
+    color: rgb(56, 56, 56) !important;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 
-        <Transition
-            enter-active-class="transition ease-out duration-200"
-            enter-from-class="opacity-0 scale-95"
-            enter-to-class="opacity-100 scale-100"
-            leave-active-class="transition ease-in duration-75"
-            leave-from-class="opacity-100 scale-100"
-            leave-to-class="opacity-0 scale-95"
-        >
-            <div
-                v-show="open"
-                class="absolute z-50 mt-2 rounded-md shadow-lg"
-                :class="[widthClass, alignmentClasses]"
-                style="display: none"
-                @click="open = false"
-            >
-                <div
-                    class="rounded-md ring-1 ring-black ring-opacity-5"
-                    :class="contentClasses"
-                >
-                    <slot name="content" />
-                </div>
-            </div>
-        </Transition>
-    </div>
-</template>
+    &:hover {
+      background-color: #efefef;
+    }
+  }
+
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin-top: 5px;
+    min-width: 150px;
+    z-index: 10;
+    list-style: none;
+
+    ul {
+      margin: 0;
+      padding: 0;
+
+      li {
+        text-align: left;
+        padding: 10px 5px;
+        border-bottom: 1px solid #f0f0f0;
+        list-style-type: none;
+        &:hover {
+          background-color: #f9f9f9;
+        }
+
+        a {
+          text-decoration: none;
+          color: #333;
+        }
+      }
+
+      li:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+</style>
