@@ -1,32 +1,10 @@
-<template>
-  <div class="my-skill row pt-7">
-    <div class="description col-6">
-      <h1>my programming skills</h1>
-      <p>
-        I create user interfaces that are straightforward, user-friendly, and
-        adaptable, streamlining tasks for users by minimizing both effort and
-        time through the effective utilization of cutting-edge technologies.
-      </p>
-    </div>
-    <div class="title col">
-      <div class="text-line">
-        <div class="text">My Skills</div>
-      </div>
-    </div>
-    <div class="skill-icons col-5">
-      <div class="skill-icon-item" v-for="(item, index) in skills" :key="index">
-        <div class="tool-tip">
-          {{ item.name }}
-        </div>
-        <div class="icon">
-          <img :src="item.icon" alt="" />
-        </div>
-      </div>
-    </div>
-  </div>
-</template>
 
-<script>
+<script setup>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import MySkills from "@components/Sections/MySkills.vue";
+
+import { ref } from "vue";
+//===========icons =========
 import Bootstrap from "@images/skill-icon/bootstrap.png";
 import ClickUp from "@images/skill-icon/clickup.png";
 import CSS3 from "@images/skill-icon/css3.png";
@@ -38,60 +16,65 @@ import npm from "@images/skill-icon/npm.png";
 import sass from "@images/skill-icon/sass.png";
 import vsCode from "@images/skill-icon/vs-code.png";
 import vueJS from "@images/skill-icon/vue.png";
-export default {
-  data() {
-    return {
-      skills: [
-        {
-          name: 'Bootstrap',
-          icon: Bootstrap,
-        },
-        {
-          name: 'Click Up',
-          icon: ClickUp,
-        },
-        {
-          name: 'CSS 3',
-          icon: CSS3,
-        },
-        {
-          name: 'Git Hub',
-          icon: git,
-        },
-        {
-          name: 'HTML 5',
-          icon: html5,
-        },
 
-        {
-          name: 'JavaScript',
-          icon: javascript,
-        },
-        {
-          name: 'JQuery',
-          icon: jquery,
-        },
-        {
-          name: 'NPM',
-          icon: npm,
-        },
-        {
-          name: 'SASS',
-          icon: sass,
-        },
-        {
-          name: 'vs code',
-          icon: vsCode,
-        },
-        {
-          name: 'VUE.js',
-          icon: vueJS,
-        },
-      ],
-    }
+const skills = ref([
+  {
+    name: "Bootstrap",
+    icon: Bootstrap,
   },
-}
+  {
+    name: "Click Up",
+    icon: ClickUp,
+  },
+  {
+    name: "CSS 3",
+    icon: CSS3,
+  },
+  {
+    name: "Git Hub",
+    icon: git,
+  },
+  {
+    name: "HTML 5",
+    icon: html5,
+  },
+
+  {
+    name: "JavaScript",
+    icon: javascript,
+  },
+  {
+    name: "JQuery",
+    icon: jquery,
+  },
+  {
+    name: "NPM",
+    icon: npm,
+  },
+  {
+    name: "SASS",
+    icon: sass,
+  },
+  {
+    name: "vs code",
+    icon: vsCode,
+  },
+  {
+    name: "VUE.js",
+    icon: vueJS,
+  },
+]);
 </script>
+<template>
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="text-xl font-semibold leading-tight text-gray-800">Skills</h2>
+    </template>
+
+    <MySkills />
+  </AuthenticatedLayout>
+</template>
+
 
 <style lang="scss">
 .skill-tooltip-wrapper {
@@ -146,7 +129,7 @@ export default {
       }
       .tool-tip {
         display: none;
-        mask-image: url('@/assets/images/mask-1.png');
+        mask-image: url("@/assets/images/mask-1.png");
         mask-size: 95%;
         mask-repeat: no-repeat;
         height: 72%;

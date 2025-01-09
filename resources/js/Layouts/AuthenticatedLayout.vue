@@ -3,11 +3,11 @@ import { ref } from "vue";
 import ApplicationLogo from "@/Components/ApplicationLogo.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
-import { Link,router } from "@inertiajs/vue3";
+import { Link, router } from "@inertiajs/vue3";
 
 const showingNavigationDropdown = ref(false);
 function handleLogout(params) {
-  router.post(route('logout'))
+  router.post(route("logout"));
 }
 </script>
 
@@ -19,42 +19,38 @@ function handleLogout(params) {
         <div class="navigation-content">
           <div class="navigation-left">
             <!-- Logo -->
-            <div class="logo-wrapper">
-              <Link :href="route('dashboard')">
-                <ApplicationLogo class="logo" />
-              </Link>
-            </div>
+            <ApplicationLogo style="color: black;" />
 
             <!-- Navigation Links -->
             <div class="nav-links">
               <Link
-                :href="route('dashboard')"
-                :active="route().current('dashboard')"
+                :href="route('hero.index')"
+                :active="route().current('hero.index')"
               >
-                Hero section
+                Hero
               </Link>
 
               <Link
-                :href="route('dashboard')"
-                :active="route().current('dashboard')"
+                :href="route('about.index')"
+                :active="route().current('about.index')"
               >
                 About
               </Link>
               <Link
-                :href="route('dashboard')"
-                :active="route().current('dashboard')"
+                :href="route('skills.index')"
+                :active="route().current('skills.index')"
               >
-                Skill
+                Skills
               </Link>
               <Link
-                :href="route('dashboard')"
-                :active="route().current('dashboard')"
+                :href="route('portfolio.index')"
+                :active="route().current('portfolio.index')"
               >
                 Portfolio
               </Link>
               <Link
-                :href="route('dashboard')"
-                :active="route().current('dashboard')"
+                :href="route('contact.index')"
+                :active="route().current('contact.index')"
               >
                 Contact
               </Link>
@@ -128,41 +124,6 @@ function handleLogout(params) {
           </div>
         </div>
       </div>
-
-      <!-- Responsive Navigation Menu -->
-      <div
-        :class="{
-          visible: showingNavigationDropdown,
-          hidden: !showingNavigationDropdown,
-        }"
-        class="responsive-menu"
-      >
-        <div class="responsive-links">
-          <ResponsiveLink
-            :href="route('dashboard')"
-            :active="route().current('dashboard')"
-          >
-            Dashboard
-          </ResponsiveLink>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="responsive-settings">
-          <div class="user-info">
-            <div class="user-name">{{ $page.props.auth.user.name }}</div>
-            <div class="user-email">{{ $page.props.auth.user.email }}</div>
-          </div>
-
-          <div class="responsive-actions">
-            <ResponsiveLink :href="route('profile.edit')"
-              >Profile</ResponsiveLink
-            >
-            <ResponsiveLink :href="route('logout')" method="post" as="button">
-              Log Out
-            </ResponsiveLink>
-          </div>
-        </div>
-      </div>
     </nav>
 
     <!-- Page Heading -->
@@ -186,6 +147,9 @@ function handleLogout(params) {
 }
 
 .navigation-bar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
   border-bottom: 1px solid #d1d5db;
   background-color: #ffffff;
 }

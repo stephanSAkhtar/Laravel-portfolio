@@ -1,23 +1,16 @@
-<template>
-  <div class="hero-wrapper">
-    <div class="image-wrapper">
-      <div class="image-layer">
-        <img class="layer-image" src="@images/pic-2.png" alt="" />
-      </div>
-      <div class="image-layer">
-        <img class="layer-image" src="@images/pic-2.png" alt="" />
-      </div>
-    </div>
-    <div class="hero-text">
-      Hi, I'm Shahzeb Akhtar, <br />
-      and I am a web developer
-    </div>
-  </div>
-</template>
+<script setup>
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import HeroSection from "@components/Sections/HeroSection.vue";
 
-<script>
-export default {}
 </script>
+<template>
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="text-xl font-semibold leading-tight text-gray-800">Hero</h2>
+    </template>
+    <HeroSection/>
+  </AuthenticatedLayout>
+</template>
 
 <style lang="scss">
 .hero-wrapper {
@@ -48,7 +41,7 @@ export default {}
       }
       &:first-child {
         // mask-image: url('~/assets/images/mask-image.png');
-        mask-image: url('@images/splash/new-mask-3.png');
+        mask-image: url("@images/splash/new-mask-3.png");
         mask-size: 80rem;
         mask-repeat: no-repeat;
         mask-position: center;
@@ -57,7 +50,7 @@ export default {}
           mask-size: calc(80rem - 33%);
         }
         &::before {
-          content: '';
+          content: "";
           top: 0;
           left: 0;
           height: 100%;
@@ -78,7 +71,6 @@ export default {}
           z-index: 5;
         }
         @media screen and (max-width: 500px) {
-        
         }
       }
     }

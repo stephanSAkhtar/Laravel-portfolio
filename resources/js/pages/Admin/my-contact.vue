@@ -1,167 +1,8 @@
-<template>
-  <div class="contact-info">
-    <div class="title-h">
-      <div class="text-line">
-        <div class="text">Contact me</div>
-      </div>
-    </div>
-
-    <div class="description col-6" style="padding: 7rem 0rem">
-      <h1>Contact</h1>
-      <p>
-        If You need any help in web Development contact me at the following
-        ways.
-      </p>
-    </div>
-    <div class="contact row">
-      <div class="info col-6">
-        <div class="c-item">
-          <div class="heading">
-            <i class="fa-solid fa-map-location-dot"></i>
-            Location
-          </div>
-          <div class="details">Pakistan KPK Haripur Ghazi</div>
-        </div>
-        <div class="c-item">
-          <div class="heading">
-            <i class="fa-solid fa-phone-volume"></i>
-            Phone Number
-          </div>
-          <div class="details">0320 8055453</div>
-        </div>
-        <div class="c-item">
-          <div class="heading">
-            <i class="fa-solid fa-envelope-circle-check"></i>
-            Email
-          </div>
-          <div class="details">shahzebakhtar892@gmail.com</div>
-        </div>
-      </div>
-      <div class="message-box col-6">
-        <div class="box">
-          <form ref="ruleForm">
-            <div class="b-item">
-              <CustomInput
-                :required="true"
-                id="name"
-                v-model="form.name"
-                label="Full Name"
-                :message="form.error?.message"
-              />
-
-              <!-- <a-form-model-item ref="name" prop="name">
-                <a-input
-                  @blur="
-                    () => {
-                      $refs.name.onFieldBlur();
-                    }
-                  "
-                />
-              </a-form-model-item> -->
-            </div>
-
-            <div class="b-item">
-              <CustomInput
-                :required="true"
-                type="tel"
-                id="phoneNumber"
-                v-model="form.phoneNumber"
-                label="Phone Number"
-                :message="form.error?.message"
-              />
-
-              <!-- <a-form-model-item
-                ref="phoneNumber"
-                label="Phone Number"
-                prop="phoneNumber"
-              >
-                <a-input type="number" v-model="form.phoneNumber"></a-input>
-              </a-form-model-item> -->
-            </div>
-            <div class="b-item">
-              <CustomInput
-                :required="true"
-                id="email"
-                v-model="form.email"
-                label="Email"
-                type="email"
-                :message="form.error?.message"
-              />
-              <!-- <a-form-model-item ref="email" label="Email" prop="email">
-                <a-input type="email" v-model="form.email"></a-input>
-              </a-form-model-item> -->
-            </div>
-            <div class="b-item">
-              <CustomInput
-                id="subject"
-                v-model="form.subject"
-                label="Subject"
-                :message="form.error?.message"
-              />
-              <!-- <a-form-model-item ref="subject" label="Subject" prop="subject">
-                <a-input v-model="form.subject"></a-input>
-              </a-form-model-item> -->
-            </div>
-            <div class="b-item">
-              <CustomTextarea
-                :required="true"
-                id="message"
-                label="Message"
-                v-model="form.message"
-                placeholder="Type Your Message"
-              />
-              <!-- <a-form-model-item ref="message" label="Message" prop="message">
-                <CustomTextarea
-                  v-model="form.message"
-                  placeholder="Type Your Message"
-                  :auto-size="{ minRows: 3, maxRows: 5 }"
-                />
-              </a-form-model-item> -->
-            </div>
-          </form>
-          <div class="b-item">
-            <CustomButton @click="sendMail" :loading="mailLoading"
-              >Send</CustomButton
-            >
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="social-links">
-      <ul>
-        <li>
-          <a href="https://www.facebook.com/shahzeb.akhtar.583" target="blank">
-            <i class="fa-brands fa-square-facebook"></i>
-          </a>
-        </li>
-        <li>
-          <a
-            href="https://www.linkedin.com/in/shahzeb-akhtar-889570247/"
-            target="blank"
-          >
-            <i class="fa-brands fa-linkedin"></i>
-          </a>
-        </li>
-        <li>
-          <a href="https://twitter.com/ShahzebAkhtar89" target="blank">
-            <i class="fa-brands fa-square-twitter"></i>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <i class="fa-brands fa-square-instagram"></i>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { reactive, ref } from "vue";
-import CustomButton from "../CustomButton.vue";
-import CustomTextarea from "../CustomTextarea.vue";
-import CustomInput from "../CustomInput.vue";
+import MyContact from "@components/Sections/MyContact.vue";
+
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
 let form = reactive({});
 let mailLoading = ref(false);
@@ -244,6 +85,14 @@ function sendMail() {
   // })
 }
 </script>
+<template>
+  <AuthenticatedLayout>
+    <template #header>
+      <h2 class="text-xl font-semibold leading-tight text-gray-800">Contact</h2>
+    </template>
+    <MyContact />
+  </AuthenticatedLayout>
+</template>
 
 <style lang="scss">
 .contact-info {

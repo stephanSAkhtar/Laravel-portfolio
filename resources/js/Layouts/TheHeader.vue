@@ -1,5 +1,6 @@
 <script setup>
 import CustomButton from "@/Components/CustomButton.vue";
+import ApplicationLogo from "@components/ApplicationLogo.vue";
 import { ref, onMounted, onUnmounted } from "vue";
 import { router, Link } from "@inertiajs/vue3";
 const themeMode = ref("dark");
@@ -64,13 +65,13 @@ onUnmounted(() => {
     @contextmenu="showLoginButton($event)"
   >
     <div class="Header-title">
-      <div class="logo">Portfolio</div>
+      <ApplicationLogo />
     </div>
 
     <!-- Menu for Navigation Links -->
     <div class="menu">
       <ul>
-        <li><a href="#hero-section">Home</a></li>
+        <li><a href="#hero-section">Hero</a></li>
         <li><a href="#about-me">About</a></li>
         <li><a href="#my-skill">Skill</a></li>
         <li><a href="#my-work">Portfolio</a></li>
@@ -119,15 +120,7 @@ onUnmounted(() => {
   .Header-title {
     display: flex;
     align-items: center;
-    .logo {
-      text-transform: uppercase;
-      font-weight: 500;
-      font-size: 4rem;
-line-height: 4rem;
-
-      font-family: var(--logo-font-family);
-      color: var(--text-primary-color) !important;
-    }
+    color: var(--text-primary-color) !important;
   }
 
   .menu {
