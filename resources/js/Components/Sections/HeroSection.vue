@@ -1,22 +1,36 @@
 <template>
-  <div class="hero-wrapper">
+  <div class="hero-wrapper" :style="{ '--mask-image': `url(${maskImage})` }">
     <div class="image-wrapper">
       <div class="image-layer">
-        <img class="layer-image" src="@images/pic-2.png" alt="" />
+        <img class="layer-image" :src="userImage" alt="" />
       </div>
       <div class="image-layer">
-        <img class="layer-image" src="@images/pic-2.png" alt="" />
+        <img class="layer-image" :src="userImage" alt="" />
       </div>
     </div>
-    <div class="hero-text">
-      Hi, I'm Shahzeb Akhtar, <br />
-      and I am a web developer
-    </div>
+    <div class="hero-text"></div>
   </div>
 </template>
 
-<script>
-export default {}
+<script setup>
+import { ref } from "vue";
+import maskImageDefault from "@images/splash/new-mask-3.png";
+import userImageDefault from "@images/pic-2.png";
+
+const props = defineProps({
+  maskImage: {
+    type: [String, Object],
+    default: maskImageDefault,
+  },
+  userImage: {
+    type: [String, Object],
+    default: userImageDefault,
+  },
+  content: {
+    type: String,
+    default: "Hi, I'm Shahzeb Akhtar, and I am a web developer",
+  },
+});
 </script>
 
 <style lang="scss">
@@ -48,7 +62,8 @@ export default {}
       }
       &:first-child {
         // mask-image: url('~/assets/images/mask-image.png');
-        mask-image: url('@images/splash/new-mask-3.png');
+        mask-image: var(--mask-image);
+        -webkit-mask-image: var(--mask-image);
         mask-size: 80rem;
         mask-repeat: no-repeat;
         mask-position: center;
@@ -57,7 +72,7 @@ export default {}
           mask-size: calc(80rem - 33%);
         }
         &::before {
-          content: '';
+          content: "";
           top: 0;
           left: 0;
           height: 100%;
@@ -78,7 +93,6 @@ export default {}
           z-index: 5;
         }
         @media screen and (max-width: 500px) {
-        
         }
       }
     }
