@@ -116,7 +116,10 @@ function uploadImage() {
 watch(
   () => previewImages.value,
   () => {
-    emit("updateImage", props.multiple ? files.value : files.value[0]);
+    emit(
+      "updateImage",
+      props.multiple ? files.value : URL.createObjectURL(files.value[0])
+    );
   },
   {
     deep: true,
@@ -127,9 +130,8 @@ watch(
 <style lang="scss">
 $image-upload-preview-size: 100px;
 #custom-image-upload {
-   .label {
-
-   } 
+  .label {
+  }
   .image-upload-container {
     display: flex;
     gap: 0.5rem;

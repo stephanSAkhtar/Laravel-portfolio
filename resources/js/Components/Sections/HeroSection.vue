@@ -1,11 +1,25 @@
 <template>
   <div class="hero-wrapper" :style="{ '--mask-image': `url(${maskImage})` }">
+    {{
+        `width:${userImgStyle.width}rem;top:${userImgStyle.top}rem;left:${userImgStyle.left}rem;`
+      }}
     <div class="image-wrapper">
+     
       <div class="image-layer">
-        <img class="layer-image" :src="userImage" alt="" />
+        <img
+          class="layer-image"
+          :style="`width:${userImgStyle.width}rem;top:${userImgStyle.top}rem;left:${userImgStyle.left}rem;`"
+          :src="userImage"
+          alt=""
+        />
       </div>
       <div class="image-layer">
-        <img class="layer-image" :src="userImage" alt="" />
+        <img
+          class="layer-image"
+          :style="`width:${userImgStyle.width}rem;top:${userImgStyle.top}rem;left:${userImgStyle.left}rem;`"
+          :src="userImage"
+          alt=""
+        />
       </div>
     </div>
     <div class="hero-text"></div>
@@ -23,8 +37,16 @@ const props = defineProps({
     default: maskImageDefault,
   },
   userImage: {
-    type: [String, Object],
+    type: [String, File],
     default: userImageDefault,
+  },
+  userImgStyle: {
+    type: Object,
+    default: () => ({
+      width: 44,
+      left: 1.8,
+      top: -1,
+    }),
   },
   content: {
     type: String,
@@ -53,12 +75,6 @@ const props = defineProps({
 
       .layer-image {
         position: relative;
-        zoom: 1.2;
-        width: 37rem;
-        left: 1.3rem;
-        @media screen and (max-width: 500px) {
-          width: calc(37rem - 10%);
-        }
       }
       &:first-child {
         // mask-image: url('~/assets/images/mask-image.png');

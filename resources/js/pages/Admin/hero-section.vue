@@ -1,12 +1,19 @@
 <script setup>
-import { ref } from "vue";
+import { reactive, ref } from "vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import HeroSection from "@components/Sections/HeroSection.vue";
 import CustomTextarea from "@/Components/CustomTextarea.vue";
+import CustomInput from "@/Components/CustomInput.vue";
 import CustomButton from "@/Components/CustomButton.vue";
 import CustomImageUpload from "@/Components/CustomImageUpload.vue";
 
-const form = ref({});
+const form = reactive({
+  userImgStyle: {
+    width: 44,
+    left: 1.8,
+    top: -1,
+  },
+});
 function updateImage(param, type) {
   if (type == "user") {
     form.value.userImg = param;
@@ -26,6 +33,7 @@ function updateImage(param, type) {
         :maskImage="form.maskImg"
         :userImage="form.userImg"
         :content="form.content"
+        :userImgStyle="userImgStyle"
       />
       <div class="actions">
         <form @submit.prevent="submit">
@@ -43,6 +51,30 @@ function updateImage(param, type) {
               @update-image="(val) => updateImage(val, 'mask')"
             />
           </div>
+          <div class="mt-4">
+            <CustomInput
+              label="User Image Width"
+              id="width"
+              type="number"
+              v-model="form.userImgStyle.width"
+            />
+          </div>
+          <div class="mt-4 flex items-center justify-center">
+            <CustomInput
+            class="mr-8"
+              label="User Image Top"
+              id="top"
+              type="number"
+              v-model="form.userImgStyle.top"
+            />
+            <CustomInput
+              label="User Image Left"
+              id="left"
+              type="number"
+              v-model="form.userImgStyle.left"
+            />
+          </div>
+
           <div class="mt-4">
             <CustomTextarea
               label="Content"

@@ -25,7 +25,7 @@ const getScroll = () => {
     const scrollY = window.scrollY;
     scroll.value = scrollY;
     const progress =
-        (scrollY / (content.scrollHeight - window.innerHeight)) * 100;
+        (scrollY / (content?.scrollHeight - window?.innerHeight)) * 100;
     scrollProgress.value = progress;
 };
 
