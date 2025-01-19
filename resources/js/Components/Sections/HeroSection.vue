@@ -22,7 +22,7 @@
         />
       </div>
     </div>
-    <div class="hero-text"></div>
+    <div class="hero-text">{{ content }}</div>
   </div>
 </template>
 

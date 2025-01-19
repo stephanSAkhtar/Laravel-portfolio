@@ -7,7 +7,7 @@ import CustomInput from "@/Components/CustomInput.vue";
 import CustomButton from "@/Components/CustomButton.vue";
 import CustomImageUpload from "@/Components/CustomImageUpload.vue";
 
-const form = reactive({
+const form = ref({
   userImgStyle: {
     width: 44,
     left: 1.8,
@@ -33,7 +33,7 @@ function updateImage(param, type) {
         :maskImage="form.maskImg"
         :userImage="form.userImg"
         :content="form.content"
-        :userImgStyle="userImgStyle"
+        :userImgStyle="form.userImgStyle"
       />
       <div class="actions">
         <form @submit.prevent="submit">
@@ -59,7 +59,7 @@ function updateImage(param, type) {
               v-model="form.userImgStyle.width"
             />
           </div>
-          <div class="mt-4 flex items-center justify-center">
+          <div class="mt-4 flex items-center justify-between">
             <CustomInput
             class="mr-8"
               label="User Image Top"
@@ -80,8 +80,8 @@ function updateImage(param, type) {
               label="Content"
               id="content"
               type="text"
-              v-model="form.email"
-              :message="form.errors?.email"
+              v-model="form.content"
+              :message="form.errors?.content"
             />
           </div>
 

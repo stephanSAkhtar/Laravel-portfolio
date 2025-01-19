@@ -9,39 +9,20 @@
     </label>
     <div class="image-upload-container mt-8">
       <div v-if="previewImages.length" class="image-upload-preview-container">
-        <div
-          v-for="(image, index) in previewImages"
-          :key="index"
-          class="image-upload-preview"
-        >
+        <div v-for="(image, index) in previewImages" :key="index" class="image-upload-preview">
           <img :src="image" alt="Preview" />
-          <button
-            @click="removeImage(index)"
-            class="image-upload-preview-remove"
-          >
+          <button @click="removeImage(index)" class="image-upload-preview-remove">
             x
           </button>
         </div>
       </div>
-      <div
-        class="image-upload-button-container"
-        :class="classes"
-        @click="uploadImage"
-        v-if="showUploadBtn"
-      >
+      <div class="image-upload-button-container" :class="classes" @click="uploadImage" v-if="showUploadBtn">
         <div class="image-upload-button-content">
           +
           <div class="image-upload-label">{{ btnText }}</div>
         </div>
       </div>
-      <input
-        type="file"
-        ref="uploadInput"
-        v-show="false"
-        :multiple="multiple"
-        accept="image/*"
-        @change="handleFiles"
-      />
+      <input type="file" ref="uploadInput" v-show="false" :multiple="multiple" accept="image/*" @change="handleFiles" />
     </div>
   </div>
 </template>
@@ -116,10 +97,18 @@ function uploadImage() {
 watch(
   () => previewImages.value,
   () => {
-    emit(
-      "updateImage",
-      props.multiple ? files.value : URL.createObjectURL(files.value[0])
-    );
+    if (files.value[0]) {
+      emit(
+        "updateImage",
+        props.multiple ? files.value : URL.createObjectURL(files.value[0])
+      );
+    } else {
+      emit(
+        "updateImage",
+        ""
+      );
+    }
+
   },
   {
     deep: true,
@@ -129,9 +118,10 @@ watch(
 
 <style lang="scss">
 $image-upload-preview-size: 100px;
+
 #custom-image-upload {
-  .label {
-  }
+  .label {}
+
   .image-upload-container {
     display: flex;
     gap: 0.5rem;
