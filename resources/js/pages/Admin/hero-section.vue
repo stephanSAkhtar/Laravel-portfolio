@@ -13,6 +13,7 @@ const form = ref({
     left: 1.8,
     top: -1,
   },
+  maskImageSize: 80,
 });
 function updateImage(param, type) {
   if (type == "user") {
@@ -34,6 +35,7 @@ function updateImage(param, type) {
         :userImage="form.userImg"
         :content="form.content"
         :userImgStyle="form.userImgStyle"
+        :maskImageSize="form.maskImageSize"
       />
       <div class="actions">
         <form @submit.prevent="submit">
@@ -51,17 +53,24 @@ function updateImage(param, type) {
               @update-image="(val) => updateImage(val, 'mask')"
             />
           </div>
-          <div class="mt-4">
+          <div class="mt-4 flex items-center justify-between">
             <CustomInput
+            
               label="User Image Width"
               id="width"
               type="number"
               v-model="form.userImgStyle.width"
             />
+            <CustomInput
+              label="Background Image Width"
+              id="width"
+              type="number"
+              v-model="form.maskImageSize"
+            />
           </div>
           <div class="mt-4 flex items-center justify-between">
             <CustomInput
-            class="mr-8"
+              
               label="User Image Top"
               id="top"
               type="number"
@@ -103,9 +112,11 @@ function updateImage(param, type) {
 <style lang="scss">
 .hero-section {
   display: flex;
+
   .preview {
     width: 60%;
   }
+
   .actions {
     width: 40%;
   }

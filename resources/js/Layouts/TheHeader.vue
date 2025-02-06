@@ -160,6 +160,7 @@ onUnmounted(() => {
 
   .actions {
     .primary-btn {
+      color: var(--text-primary-color);
       padding: 1rem 2rem;
       background-size: 290% 200%;
     }

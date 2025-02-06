@@ -2,9 +2,9 @@
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 
 const props = defineProps({
-    show: {
+    visible: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     maxWidth: {
         type: String,
@@ -17,27 +17,27 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['close']);
-const dialog = ref();
-const showSlot = ref(props.show);
+// const dialog = ref();
+// const showSlot = ref(props.visible);
 
-watch(
-    () => props.show,
-    () => {
-        if (props.show) {
-            document.body.style.overflow = 'hidden';
-            showSlot.value = true;
+// watch(
+//     () => props.visible,
+//     () => {
+//         if (props.visible) {
+//             document.body.style.overflow = 'hidden';
+//             showSlot.value = true;
+// console.log()
+//             dialog.value?.showModal();
+//         } else {
+//             document.body.style.overflow = '';
 
-            dialog.value?.showModal();
-        } else {
-            document.body.style.overflow = '';
-
-            setTimeout(() => {
-                dialog.value?.close();
-                showSlot.value = false;
-            }, 200);
-        }
-    },
-);
+//             setTimeout(() => {
+//                 dialog.value?.close();
+//                 showSlot.value = false;
+//             }, 200);
+//         }
+//     },
+// );
 
 const close = () => {
     if (props.closeable) {
@@ -49,7 +49,7 @@ const closeOnEscape = (e) => {
     if (e.key === 'Escape') {
         e.preventDefault();
 
-        if (props.show) {
+        if (props.visible) {
             close();
         }
     }
@@ -65,59 +65,154 @@ onUnmounted(() => {
 
 const maxWidthClass = computed(() => {
     return {
-        sm: 'sm:max-w-sm',
-        md: 'sm:max-w-md',
-        lg: 'sm:max-w-lg',
-        xl: 'sm:max-w-xl',
-        '2xl': 'sm:max-w-2xl',
+        sm: 'dialog-max-width-sm',
+        md: 'dialog-max-width-md',
+        lg: 'dialog-max-width-lg',
+        xl: 'dialog-max-width-xl',
+        '2xl': 'dialog-max-width-2xl',
     }[props.maxWidth];
 });
 </script>
 
 <template>
-    <dialog
-        class="z-50 m-0 min-h-full min-w-full overflow-y-auto bg-transparent backdrop:bg-transparent"
-        ref="dialog"
-    >
-        <div
-            class="fixed inset-0 z-50 overflow-y-auto px-4 py-6 sm:px-0"
-            scroll-region
-        >
-            <Transition
-                enter-active-class="ease-out duration-300"
-                enter-from-class="opacity-0"
-                enter-to-class="opacity-100"
-                leave-active-class="ease-in duration-200"
-                leave-from-class="opacity-100"
-                leave-to-class="opacity-0"
-            >
-                <div
-                    v-show="show"
-                    class="fixed inset-0 transform transition-all"
-                    @click="close"
-                >
-                    <div
-                        class="absolute inset-0 bg-gray-500 opacity-75"
-                    />
-                </div>
-            </Transition>
+    <div v-show="visible" class="dialog-container" ref="dialog">
+        <div class="dialog-backdrop" scroll-region>
 
-            <Transition
-                enter-active-class="ease-out duration-300"
-                enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enter-to-class="opacity-100 translate-y-0 sm:scale-100"
-                leave-active-class="ease-in duration-200"
-                leave-from-class="opacity-100 translate-y-0 sm:scale-100"
-                leave-to-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
-                <div
-                    v-show="show"
-                    class="mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full"
-                    :class="maxWidthClass"
-                >
-                    <slot v-if="showSlot" />
-                </div>
-            </Transition>
+            <div v-show="visible" class="dialog-overlay" @click="close">
+                <div class="dialog-overlay-background" />
+            </div>
+
+
+
+            <div class="dialog-content" :class="maxWidthClass">
+                <slot />
+            </div>
+
         </div>
-    </dialog>
+    </div>
 </template>
+
+<style>
+.dialog-container {
+    z-index: 50;
+    margin: 0;
+    min-height: 80vh;
+    min-width: 90vw;
+    overflow-y: auto;
+    background-color: transparent;
+    backdrop-filter: blur(4px);
+}
+
+.dialog-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    overflow-y: auto;
+    padding: 1.5rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-overlay {
+    position: fixed;
+    inset: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.dialog-overlay-background {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(17, 18, 18, 0.155);
+    /* Equivalent to Tailwind's bg-gray-500 opacity-75 */
+}
+
+.dialog-content {
+    margin-bottom: 1.5rem;
+    transform: scale(1);
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background-color: white;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+}
+
+.dialog-max-width-sm {
+    max-width: 24rem;
+    /* Equivalent to Tailwind's sm:max-w-sm */
+}
+
+.dialog-max-width-md {
+    max-width: 28rem;
+    /* Equivalent to Tailwind's sm:max-w-md */
+}
+
+.dialog-max-width-lg {
+    max-width: 32rem;
+    /* Equivalent to Tailwind's sm:max-w-lg */
+}
+
+.dialog-max-width-xl {
+    max-width: 36rem;
+    /* Equivalent to Tailwind's sm:max-w-xl */
+}
+
+.dialog-max-width-2xl {
+    max-width: 60rem;
+    /* Equivalent to Tailwind's sm:max-w-2xl */
+}
+
+/* Transition classes for fade effect */
+.transition-fade-enter {
+    transition: opacity 0.3s ease-out;
+}
+
+.transition-fade-from {
+    opacity: 0;
+}
+
+.transition-fade-to {
+    opacity: 1;
+}
+
+.transition-fade-leave {
+    transition: opacity 0.2s ease-in;
+}
+
+.transition-fade-leave-from {
+    opacity: 1;
+}
+
+.transition-fade-leave-to {
+    opacity: 0;
+}
+
+/* Transition classes for scale effect */
+.transition-scale-enter {
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+}
+
+.transition-scale-from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.95);
+}
+
+.transition-scale-to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.transition-scale-leave {
+    transition: transform 0.2s ease-in, opacity 0.2s ease-in;
+}
+
+.transition-scale-leave-from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.transition-scale-leave-to {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.95);
+}
+</style>

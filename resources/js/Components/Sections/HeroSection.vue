@@ -1,25 +1,17 @@
 <template>
-  <div class="hero-wrapper" :style="{ '--mask-image': `url(${maskImage})` }">
-    {{
-        `width:${userImgStyle.width}rem;top:${userImgStyle.top}rem;left:${userImgStyle.left}rem;`
-      }}
+  <div class="hero-wrapper"
+    :style="{ '--mask-image': `url(${maskImage})`, '--mask-image-size': `${maskImageSize}rem` }">
     <div class="image-wrapper">
-     
+
       <div class="image-layer">
-        <img
-          class="layer-image"
+        <img class="layer-image"
           :style="`width:${userImgStyle.width}rem;top:${userImgStyle.top}rem;left:${userImgStyle.left}rem;`"
-          :src="userImage"
-          alt=""
-        />
+          :src="userImage" alt="" />
       </div>
       <div class="image-layer">
-        <img
-          class="layer-image"
+        <img class="layer-image"
           :style="`width:${userImgStyle.width}rem;top:${userImgStyle.top}rem;left:${userImgStyle.left}rem;`"
-          :src="userImage"
-          alt=""
-        />
+          :src="userImage" alt="" />
       </div>
     </div>
     <div class="hero-text">{{ content }}</div>
@@ -39,6 +31,10 @@ const props = defineProps({
   userImage: {
     type: [String, File],
     default: userImageDefault,
+  },
+  maskImageSize: {
+    type: [Number, String],
+    default: 80
   },
   userImgStyle: {
     type: Object,
@@ -62,9 +58,11 @@ const props = defineProps({
   align-items: center;
   justify-content: center;
   height: 65rem;
+
   .image-wrapper {
     display: block;
     text-align: center;
+
     .image-layer {
       position: absolute;
       top: 0;
@@ -76,17 +74,20 @@ const props = defineProps({
       .layer-image {
         position: relative;
       }
+
       &:first-child {
         // mask-image: url('~/assets/images/mask-image.png');
         mask-image: var(--mask-image);
         -webkit-mask-image: var(--mask-image);
-        mask-size: 80rem;
+        mask-size: var(--mask-image-size);
         mask-repeat: no-repeat;
         mask-position: center;
         width: -webkit-fill-available;
+
         @media screen and (max-width: 500px) {
           mask-size: calc(80rem - 33%);
         }
+
         &::before {
           content: "";
           top: 0;
@@ -98,21 +99,25 @@ const props = defineProps({
           z-index: 1;
           background: var(--theme-gradient-primary-color);
         }
+
         .layer-image {
           z-index: 2;
         }
       }
+
       &:last-child {
         height: 40rem;
         overflow: hidden !important;
+
         .layer-image {
           z-index: 5;
         }
-        @media screen and (max-width: 500px) {
-        }
+
+        @media screen and (max-width: 500px) {}
       }
     }
   }
+
   .hero-text {
     font-size: 4.8rem;
     position: absolute;
@@ -123,6 +128,7 @@ const props = defineProps({
     letter-spacing: 0.2rem;
     text-shadow: 0rem 0rem 2rem black;
     text-align: center;
+    width: 60rem;
   }
 }
 </style>

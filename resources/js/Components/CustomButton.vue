@@ -66,6 +66,7 @@ defineProps({
   background-position: right;
   transition: all 0.3s ease-out;
   text-transform: uppercase;
+  cursor: pointer;
 }
 .primary-btn i {
   color: #beb6b6;
