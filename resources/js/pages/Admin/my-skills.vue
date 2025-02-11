@@ -103,6 +103,11 @@ const form = ref({
           </div>
           <CustomButton class="add-button">+ Add Skill</CustomButton>
         </div>
+        <div class="flex items-center">
+          <CustomButton >Save</CustomButton>
+          <CustomButton type="cancel">Cancel</CustomButton>
+
+        </div>
       </div>
     </CustomModal>
   </AuthenticatedLayout>
